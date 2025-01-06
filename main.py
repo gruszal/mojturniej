@@ -59,7 +59,7 @@ def create_context(results: pd.DataFrame, tournaments: pd.DataFrame) -> dict:
         }
         context_tournaments.append(single_tournament)
 
-    return {'tournaments': context_tournaments}
+    return {'tournaments': reversed(context_tournaments)}
 
 
 if __name__ == '__main__':

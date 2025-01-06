@@ -14,45 +14,55 @@
     <h2>Skarb Kibica</h2>
 
     {% for tournament in tournaments %}
-    <div class="">
-        <h3>{{tournament.name}} - {{tournament.date}}</h3>
-        <table class="table">
-            <thead>
-            <tr>
-                <th>place</th>
-                <th>player</th>
-                <th>team</th>
-                <th>Rank</th>
-                <th>RM</th>
-                <th>Z</th>
-                <th>R</th>
-                <th>P</th>
-                <th>BZ</th>
-                <th>BS</th>
-                <th>GD</th>
-                <th>Points</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for row in tournament.data %}
-            <tr>
-                <td>{{ row.place }}</td>
-                <td>{{ row.player }}</td>
-                <td>{{ row.team }}</td>
-                <td>{{ row.Rank }}</td>
-                <td>{{ row.RM }}</td>
-                <td>{{ row.Z }}</td>
-                <td>{{ row.R }}</td>
-                <td>{{ row.P }}</td>
-                <td>{{ row.BZ }}</td>
-                <td>{{ row.BS }}</td>
-                <td>{{ row.GD }}</td>
-                <td>{{ row.Points }}</td>
+    <div class="card my-2">
+        <div class="card-body">
+            <div class="card-title">
+                {{tournament.name}} - {{tournament.date}}
+                <button type="button" class="btn btn-light" data-bs-toggle="collapse"
+                        data-bs-target="#table{{loop.index}}">
+                    show/hide
+                </button>
+            </div>
+            <div class="card-text collapse {{'show' if loop.index == 1}}" id="table{{loop.index}}">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>place</th>
+                        <th>player</th>
+                        <th>team</th>
+                        <th>Rank</th>
+                        <th>RM</th>
+                        <th>Z</th>
+                        <th>R</th>
+                        <th>P</th>
+                        <th>BZ</th>
+                        <th>BS</th>
+                        <th>GD</th>
+                        <th>Points</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for row in tournament.data %}
+                    <tr>
+                        <td>{{ row.place }}</td>
+                        <td>{{ row.player }}</td>
+                        <td>{{ row.team }}</td>
+                        <td>{{ row.Rank }}</td>
+                        <td>{{ row.RM }}</td>
+                        <td>{{ row.Z }}</td>
+                        <td>{{ row.R }}</td>
+                        <td>{{ row.P }}</td>
+                        <td>{{ row.BZ }}</td>
+                        <td>{{ row.BS }}</td>
+                        <td>{{ row.GD }}</td>
+                        <td>{{ row.Points }}</td>
 
-            </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
     {% endfor %}

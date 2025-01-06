@@ -42,19 +42,23 @@ def create_context(results: pd.DataFrame, tournaments: pd.DataFrame) -> dict:
     context_tournaments = []
 
     for index, tournament in tournaments.iterrows():
-        id = tournament['turniej']
+        id_ = tournament['turniej']
         date = tournament['data']
-        data = results[results['tournament'] == id]
+        data = results[results['tournament'] == id_]
 
-        df_html = data.to_html(classes='table table-striped')
+        # move place column to front
+        data.insert(0, 'place', data.pop('place'))
 
-        xxx = {
-            'id': id,
-            'name': f"Mój Turniej {id}",
+        pandas_table = data.to_html(classes='table table-striped', index=False)
+
+        single_tournament = {
+            'id': id_,
+            'name': f"Mój Turniej {id_}",
             'date': date,
-            'data': df_html,
+            'data': data,
+            'pandas_table': pandas_table,
         }
-        context_tournaments.append(xxx)
+        context_tournaments.append(single_tournament)
 
     return {'tournaments': context_tournaments}
 

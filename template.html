@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mój Turniej</title>
+</head>
+
+<body>
+
+<h1>Mój Turniej</h1>
+<h2>Skarb Kibica</h2>
+
+{% for tournament in tournaments %}
+<div>
+    <h3>{{tournament.name}}</h3>
+    <p>{{tournament.date}}</p>
+    <p>{{tournament.data}}</p>
+</div>
+
+{% endfor %}
+
+</body>

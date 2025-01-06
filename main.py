@@ -49,14 +49,13 @@ def create_context(results: pd.DataFrame, tournaments: pd.DataFrame) -> dict:
         # move place column to front
         data.insert(0, 'place', data.pop('place'))
 
-        pandas_table = data.to_html(classes='table table-striped', index=False)
+        data.pop('tournament')
 
         single_tournament = {
             'id': id_,
             'name': f"Mój Turniej {id_}",
             'date': date,
-            'data': data,
-            'pandas_table': pandas_table,
+            'data': data.to_dict('records'),
         }
         context_tournaments.append(single_tournament)
 

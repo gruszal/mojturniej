@@ -11,7 +11,7 @@ function create_chart_object(data, element_id, reverse) {
     const datasets = persons.map(person => {
         return {
             label: person,
-            data: labels.map(t => data[t][person] || null), // Handle null values
+            data: labels.map(t => data[t][person]),
             fill: false
         };
     });
@@ -44,7 +44,8 @@ function create_chart_object(data, element_id, reverse) {
                     reverse: reverse,
                     ticks: {
                         stepSize: 1
-                    }
+                    },
+                    beginAtZero: true,
                 }
             }
         }

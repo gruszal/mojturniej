@@ -78,3 +78,4 @@ async function generate_graph(json_file_path, element_id, reverse = true) {
 generate_graph('docs/assets/place_per_tournament.json', 'place_per_tournament', true);
 generate_graph('docs/assets/points_per_tournament.json', 'points_per_tournament', false);
 generate_graph('docs/assets/points_per_match_per_tournament.json', 'points_per_match_per_tournament', false);
+generate_graph('docs/assets/get_five_tournament_rolling_coefficient.json', 'get_five_tournament_rolling_coefficient', false);

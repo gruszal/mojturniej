@@ -81,3 +81,16 @@ def get_points_per_match_per_tournament(results: pd.DataFrame) -> pd.DataFrame:
     results['points_per_match'] = results['Points'] / results['RM']
     df = pd.pivot_table(results, index='player', columns='tournament', values='points_per_match')
     return df
+
+
+def get_five_tournament_rolling_coefficient(results: pd.DataFrame) -> pd.DataFrame:
+    results['points_per_match'] = results['Points'] / results['RM']
+    results['coef'] = results['points_per_match'] / results['Rank']
+
+    df = pd.pivot_table(results, index='player', columns='tournament', values='coef')
+
+    df_normalized = df.div(df.max())
+
+    rolling_df = df_normalized.rolling(window=5, axis=1, min_periods=1).mean()
+
+    return rolling_df

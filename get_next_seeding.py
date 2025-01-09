@@ -21,9 +21,10 @@ if __name__ == '__main__':
     # print(rolling_df)
 
     last_five_tournaments = rolling_df.iloc[:, -1]
-    print(last_five_tournaments)
 
-    print()
+    # TODO: add 0 to even the bins?
+
+    print(last_five_tournaments)
 
     number_of_bins = 5  # number of steps in "stars"
 

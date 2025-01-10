@@ -2,7 +2,8 @@ import pandas as pd
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 from src.helpers import create_context, get_sanitized_results, get_places, get_points_per_tournament, \
-    get_points_per_match_per_tournament, get_five_tournament_rolling_coefficient, get_coefficient_per_tournament
+    get_points_per_match_per_tournament, get_five_tournament_rolling_coefficient, get_coefficient_per_tournament, \
+    GoalsFor, GoalsAgainst, GoalDifference
 
 if __name__ == '__main__':
     results = pd.read_csv('docs/assets/wyniki2.csv')
@@ -25,6 +26,9 @@ if __name__ == '__main__':
     five_tournament_rolling_coefficient_df = get_five_tournament_rolling_coefficient(results)
     five_tournament_rolling_coefficient_df.to_json('docs/assets/five_tournament_rolling_coefficient.json')
 
+    goals_for = GoalsFor(results).save_json()
+    goals_against = GoalsAgainst(results).save_json()
+    goal_difference = GoalDifference(results).save_json()
 
     env = Environment(
         loader=FileSystemLoader("."),

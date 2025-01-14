@@ -4,6 +4,26 @@ from abc import ABCMeta
 import pandas as pd
 
 
+class JsonData(metaclass=ABCMeta):
+    assets_dir = 'docs/assets/'
+
+    def __init__(self, results):
+        self.results = results
+
+    @property
+    @abc.abstractmethod
+    def name(self):
+        pass
+
+    @abc.abstractmethod
+    def generate_data(self) -> pd.DataFrame:
+        pass
+
+    def save_json(self):
+        data = self.generate_data()
+        data.to_json(self.assets_dir + self.name + '.json')
+
+
 def fix_commas_in_rank(results: pd.DataFrame) -> pd.DataFrame:
     results['Rank'] = results['Rank'].str.replace(',', '.')
     results['Rank'] = results['Rank'].astype(float)
@@ -75,22 +95,6 @@ def get_sanitized_results(results: pd.DataFrame) -> pd.DataFrame:
     return results
 
 
-def get_places(results):
-    df = results.pivot(index='player', columns='tournament', values='place')
-    return df
-
-
-def get_points_per_tournament(results: pd.DataFrame) -> pd.DataFrame:
-    df = pd.pivot_table(results, index='player', columns='tournament', values='Points')
-    return df
-
-
-def get_points_per_match_per_tournament(results: pd.DataFrame) -> pd.DataFrame:
-    results['points_per_match'] = results['Points'] / results['RM']
-    df = pd.pivot_table(results, index='player', columns='tournament', values='points_per_match')
-    return df
-
-
 def get_coefficient_per_tournament(results: pd.DataFrame) -> pd.DataFrame:
     results['points_per_match'] = results['Points'] / results['RM']
     results['coef'] = results['points_per_match'] / results['Rank']
@@ -102,30 +106,45 @@ def get_coefficient_per_tournament(results: pd.DataFrame) -> pd.DataFrame:
     return df_normalized
 
 
-def get_five_tournament_rolling_coefficient(results: pd.DataFrame) -> pd.DataFrame:
-    df_normalized = get_coefficient_per_tournament(results)
-    rolling_df = df_normalized.T.rolling(window=5, min_periods=1).mean().T
-    return rolling_df
+class PlacesPerTournament(JsonData):
+    name = 'places_per_tournament'
 
-
-class JsonData(metaclass=ABCMeta):
-    assets_dir = 'docs/assets/'
-
-    def __init__(self, results):
-        self.results = results
-
-    @property
-    @abc.abstractmethod
-    def name(self):
-        pass
-
-    @abc.abstractmethod
     def generate_data(self) -> pd.DataFrame:
-        pass
+        df = self.results.pivot(index='player', columns='tournament', values='place')
+        return df
 
-    def save_json(self):
-        data = self.generate_data()
-        data.to_json(self.assets_dir + self.name + '.json')
+
+class PointsPerTournament(JsonData):
+    name = 'points_per_tournament'
+
+    def generate_data(self) -> pd.DataFrame:
+        df = pd.pivot_table(self.results, index='player', columns='tournament', values='Points')
+        return df
+
+
+class PointsPerMatchPerTournament(JsonData):
+    name = 'points_per_match_per_tournament'
+
+    def generate_data(self) -> pd.DataFrame:
+        self.results['points_per_match'] = self.results['Points'] / self.results['RM']
+        df = pd.pivot_table(self.results, index='player', columns='tournament', values='points_per_match')
+        return df
+
+
+class CoefficientPerTournament(JsonData):
+    name = 'coefficient_per_tournament'
+
+    def generate_data(self):
+        return get_coefficient_per_tournament(self.results)
+
+
+class FiveTournamentRollingCoefficient(JsonData):
+    name = 'five_tournament_rolling_coefficient'
+
+    def generate_data(self):
+        df_normalized = get_coefficient_per_tournament(self.results)
+        rolling_df = df_normalized.T.rolling(window=5, min_periods=1).mean().T
+        return rolling_df
 
 
 class GoalsFor(JsonData):

@@ -97,7 +97,7 @@ function generate_boxes(n) {
 var options1 = structuredClone(options);
 options1.scales.y.reverse = true;
 options1.scales.y.beginAtZero = false;
-generate_graph('docs/assets/place_per_tournament.json', 'place_per_tournament', options1);
+generate_graph('docs/assets/places_per_tournament.json', 'places_per_tournament', options1);
 
 generate_graph('docs/assets/points_per_tournament.json', 'points_per_tournament', options);
 generate_graph('docs/assets/points_per_match_per_tournament.json', 'points_per_match_per_tournament', options);

@@ -1,9 +1,10 @@
 import pandas as pd
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
-from src.helpers import create_context, get_sanitized_results, get_places, get_points_per_tournament, \
-    get_points_per_match_per_tournament, get_five_tournament_rolling_coefficient, get_coefficient_per_tournament, \
-    GoalsFor, GoalsAgainst, GoalDifference
+from src.helpers import create_context, get_sanitized_results, \
+    CoefficientPerTournament, \
+    GoalsFor, GoalsAgainst, GoalDifference, FiveTournamentRollingCoefficient, PointsPerMatchPerTournament, \
+    PointsPerTournament, PlacesPerTournament
 
 if __name__ == '__main__':
     results = pd.read_csv('docs/assets/wyniki2.csv')
@@ -11,20 +12,11 @@ if __name__ == '__main__':
 
     results = get_sanitized_results(results)
 
-    places_df = get_places(results)
-    places_df.to_json('docs/assets/place_per_tournament.json')
-
-    points_per_tournament_df = get_points_per_tournament(results)
-    points_per_tournament_df.to_json('docs/assets/points_per_tournament.json')
-
-    points_per_match_per_tournament_df = get_points_per_match_per_tournament(results)
-    points_per_match_per_tournament_df.to_json('docs/assets/points_per_match_per_tournament.json')
-
-    coefficient_per_tournament_df = get_coefficient_per_tournament(results)
-    coefficient_per_tournament_df.to_json('docs/assets/coefficient_per_tournament.json')
-
-    five_tournament_rolling_coefficient_df = get_five_tournament_rolling_coefficient(results)
-    five_tournament_rolling_coefficient_df.to_json('docs/assets/five_tournament_rolling_coefficient.json')
+    PlacesPerTournament(results).save_json()
+    PointsPerTournament(results).save_json()
+    PointsPerMatchPerTournament(results).save_json()
+    CoefficientPerTournament(results).save_json()
+    FiveTournamentRollingCoefficient(results).save_json()
 
     goals_for = GoalsFor(results).save_json()
     goals_against = GoalsAgainst(results).save_json()

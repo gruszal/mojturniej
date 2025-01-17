@@ -75,6 +75,37 @@
             </div>
         </div>
     </div>
+
+    <div class="card my-2">
+        <div class="card-body">
+            <p class="card-title">Tabela wszechczasów</p>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>player</th>
+                    <th>1</th>
+                    <th>2</th>
+                    <th>3</th>
+                    <th>4</th>
+                    <th>5</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for player, results in all_time.items() %}
+                <tr>
+                    <td>{{ player }}</td>
+                    <td>{{ results[1] }}</td>
+                    <td>{{ results[2] }}</td>
+                    <td>{{ results[3] }}</td>
+                    <td>{{ results[4] }}</td>
+                    <td>{{ results[5] }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
     <div class="card my-2">
         <div class="card-body">
             <p class="card-title">liczba punktów zdobytych w turnieju</p>
@@ -83,6 +114,7 @@
             </div>
         </div>
     </div>
+
     <div class="card my-2">
         <div class="card-body">
             <p class="card-title">średnia liczba punktów zdobytych na mecz</p>
@@ -91,6 +123,7 @@
             </div>
         </div>
     </div>
+
     <div class="card my-2">
         <div class="card-body">
             <div class="card-title">
@@ -101,6 +134,10 @@
                 </p>
                 <div style="width: 800px;">
                     <canvas id="coefficient_per_tournament"></canvas>
+                </div>
+                <p class="card-title">kolejne sumy współczynników</p>
+                <div style="width: 800px;">
+                    <canvas id="all_tournament_rolling_coefficient"></canvas>
                 </div>
                 <p class="card-title">średnia współczynników z ostatnich pięciu turniejów</p>
                 <div style="width: 800px;">

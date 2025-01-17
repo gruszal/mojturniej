@@ -1,27 +1,4 @@
-import abc
-from abc import ABCMeta
-
 import pandas as pd
-
-
-class JsonData(metaclass=ABCMeta):
-    assets_dir = 'docs/assets/'
-
-    def __init__(self, results):
-        self.results = results
-
-    @property
-    @abc.abstractmethod
-    def name(self):
-        pass
-
-    @abc.abstractmethod
-    def generate_data(self) -> pd.DataFrame:
-        pass
-
-    def save_json(self):
-        data = self.generate_data()
-        data.to_json(self.assets_dir + self.name + '.json')
 
 
 def fix_commas_in_rank(results: pd.DataFrame) -> pd.DataFrame:
@@ -62,7 +39,7 @@ def add_tournament_place(results: pd.DataFrame) -> pd.DataFrame:
     return results
 
 
-def create_context(results: pd.DataFrame, tournaments: pd.DataFrame) -> dict:
+def create_tournaments(results: pd.DataFrame, tournaments: pd.DataFrame) -> list:
     context_tournaments = []
 
     for index, tournament in tournaments.iterrows():
@@ -82,7 +59,24 @@ def create_context(results: pd.DataFrame, tournaments: pd.DataFrame) -> dict:
         }
         context_tournaments.append(single_tournament)
 
-    return {'tournaments': reversed(context_tournaments)}
+    context_tournaments.reverse()
+
+    return context_tournaments
+
+
+def create_all_time(results: pd.DataFrame):
+    results_grouped = results.groupby(["player", "place"]).size().reset_index(name="count")
+    results_by_player = results_grouped.pivot(index="player", columns="place", values="count")
+    results_by_player_sorted = results_by_player.sort_values(by=[1, 2, 3, 4, 5], ascending=[False] * 5).astype('int64', errors='ignore')
+    results_sanitized = results_by_player_sorted.fillna(0).astype(int)
+    return results_sanitized.T.to_dict()
+
+
+def create_context(results: pd.DataFrame, tournaments: pd.DataFrame) -> dict:
+    return {
+        'tournaments': create_tournaments(results, tournaments),
+        'all_time': create_all_time(results)
+    }
 
 
 def get_sanitized_results(results: pd.DataFrame) -> pd.DataFrame:
@@ -93,79 +87,3 @@ def get_sanitized_results(results: pd.DataFrame) -> pd.DataFrame:
     results = add_points_column(results)
     results = add_tournament_place(results)
     return results
-
-
-def get_coefficient_per_tournament(results: pd.DataFrame) -> pd.DataFrame:
-    results['points_per_match'] = results['Points'] / results['RM']
-    results['coef'] = results['points_per_match'] / results['Rank']
-
-    df = pd.pivot_table(results, index='player', columns='tournament', values='coef')
-
-    df_normalized = df.div(df.max())
-
-    return df_normalized
-
-
-class PlacesPerTournament(JsonData):
-    name = 'places_per_tournament'
-
-    def generate_data(self) -> pd.DataFrame:
-        df = self.results.pivot(index='player', columns='tournament', values='place')
-        return df
-
-
-class PointsPerTournament(JsonData):
-    name = 'points_per_tournament'
-
-    def generate_data(self) -> pd.DataFrame:
-        df = pd.pivot_table(self.results, index='player', columns='tournament', values='Points')
-        return df
-
-
-class PointsPerMatchPerTournament(JsonData):
-    name = 'points_per_match_per_tournament'
-
-    def generate_data(self) -> pd.DataFrame:
-        self.results['points_per_match'] = self.results['Points'] / self.results['RM']
-        df = pd.pivot_table(self.results, index='player', columns='tournament', values='points_per_match')
-        return df
-
-
-class CoefficientPerTournament(JsonData):
-    name = 'coefficient_per_tournament'
-
-    def generate_data(self):
-        return get_coefficient_per_tournament(self.results)
-
-
-class FiveTournamentRollingCoefficient(JsonData):
-    name = 'five_tournament_rolling_coefficient'
-
-    def generate_data(self):
-        df_normalized = get_coefficient_per_tournament(self.results)
-        rolling_df = df_normalized.T.rolling(window=5, min_periods=1).mean().T
-        return rolling_df
-
-
-class GoalsFor(JsonData):
-    name = 'goals_for'
-
-    def generate_data(self) -> pd.DataFrame:
-        goals_for = pd.pivot_table(self.results, index='player', columns='tournament', values='BZ')
-        return goals_for
-
-
-class GoalsAgainst(JsonData):
-    name = 'goals_against'
-
-    def generate_data(self) -> pd.DataFrame:
-        goals_against = pd.pivot_table(self.results, index='player', columns='tournament', values='BS')
-        return goals_against
-
-
-class GoalDifference(JsonData):
-    name = 'goal_difference'
-
-    def generate_data(self) -> pd.DataFrame:
-        goal_difference = pd.pivot_table(self.results, index='player', columns='tournament', values='GD')
-        return goal_difference

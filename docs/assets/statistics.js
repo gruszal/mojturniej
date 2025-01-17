@@ -12,7 +12,8 @@ function create_chart_object(data, element_id, options) {
         return {
             label: person,
             data: labels.map(t => data[t][person]),
-            fill: false
+            fill: false,
+            // tension: 0.2
         };
     });
 
@@ -63,7 +64,7 @@ async function generate_graph(json_file_path, element_id, options) {
     fetch(json_file_path)
         .then(response => {
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                throw new Error(`error: ${response}`);
             }
             return response.json();
         })
@@ -73,8 +74,6 @@ async function generate_graph(json_file_path, element_id, options) {
         .catch(error => {
             console.error('Error fetching JSON:', error);
         });
-
-
 }
 
 function generate_boxes(n) {
@@ -88,7 +87,6 @@ function generate_boxes(n) {
             backgroundColor: 'rgba(0,0,0,0.1)',
             borderWidth: 0
         }
-        console.log(i / n);
     }
     return annotations;
 }
@@ -118,7 +116,6 @@ options_gd.plugins.annotation = {
             type: 'line',
             yMin: 0,
             yMax: 0,
-            // backgroundColor: 'rgba(0,0,0,0.1)',
         }
     }
 }
@@ -126,3 +123,4 @@ options_gd.plugins.annotation = {
 generate_graph('docs/assets/goal_difference.json', 'goal_difference', options_gd);
 generate_graph('docs/assets/goals_for.json', 'goals_for', options);
 generate_graph('docs/assets/goals_against.json', 'goals_against', options);
+generate_graph('docs/assets/all_tournament_rolling_coefficient.json', 'all_tournament_rolling_coefficient', options);

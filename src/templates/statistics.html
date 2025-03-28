@@ -11,66 +11,14 @@
 
 <body>
 <div class="container">
-    <h1 class="my-4">Mój Turniej - Skarb Kibica</h1>
-
-    {% for tournament in tournaments %}
-    <div class="card my-2">
-        <div class="card-body">
-            <p class="card-title">
-                <span class="fs-4 me-4">{{tournament.name}}</span>
-                <span class="me-4">{{tournament.date}}</span>
-                <button type="button" class="btn btn-light" data-bs-toggle="collapse"
-                        data-bs-target="#table{{loop.index}}">
-                    show/hide
-                </button>
-            </p>
-            <div class="card-text collapse {{'show' if loop.index == 1}}" id="table{{loop.index}}">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>place</th>
-                        <th>player</th>
-                        <th>team</th>
-                        <th>RM</th>
-                        <th>Z</th>
-                        <th>R</th>
-                        <th>P</th>
-                        <th>BZ</th>
-                        <th>BS</th>
-                        <th>GD</th>
-                        <th>Points</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for row in tournament.data %}
-                    <tr>
-                        <td>{{ row.place }}</td>
-                        <td>{{ row.player }}</td>
-                        <td>{{ row.team }} <span class="badge text-bg-light">{{ row.Rank }}</span></td>
-                        <td>{{ row.RM }}</td>
-                        <td>{{ row.Z }}</td>
-                        <td>{{ row.R }}</td>
-                        <td>{{ row.P }}</td>
-                        <td>{{ row.BZ }}</td>
-                        <td>{{ row.BS }}</td>
-                        <td>{{ row.GD }}</td>
-                        <td>{{ row.Points }}</td>
-
-                    </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    {% endfor %}
+    <h1 class="my-4">Mój Turniej - Skarb Kibica <a href="index.html">historia</a></h1>
 
     <h2>Statystyki</h2>
 
     <div class="card my-2">
         <div class="card-body">
             <p class="card-title">miejsce zdobyte w turnieju</p>
-            <div style="width: 800px;">
+            <div>
                 <canvas id="places_per_tournament"></canvas>
             </div>
         </div>
@@ -109,7 +57,7 @@
     <div class="card my-2">
         <div class="card-body">
             <p class="card-title">liczba punktów zdobytych w turnieju</p>
-            <div style="width: 800px;">
+            <div>
                 <canvas id="points_per_tournament"></canvas>
             </div>
         </div>
@@ -118,7 +66,7 @@
     <div class="card my-2">
         <div class="card-body">
             <p class="card-title">średnia liczba punktów zdobytych na mecz</p>
-            <div style="width: 800px;">
+            <div>
                 <canvas id="points_per_match_per_tournament"></canvas>
             </div>
         </div>
@@ -132,15 +80,15 @@
                     najwyższy
                     współczynnik w danym turnieju.
                 </p>
-                <div style="width: 800px;">
+                <div>
                     <canvas id="coefficient_per_tournament"></canvas>
                 </div>
                 <p class="card-title">kolejne sumy współczynników</p>
-                <div style="width: 800px;">
+                <div>
                     <canvas id="all_tournament_rolling_coefficient"></canvas>
                 </div>
                 <p class="card-title">średnia współczynników z ostatnich pięciu turniejów</p>
-                <div style="width: 800px;">
+                <div>
                     <canvas id="five_tournament_rolling_coefficient"></canvas>
                 </div>
             </div>
@@ -152,27 +100,28 @@
             <div class="card-title">
                 <h5>Bramki</h5>
                 <p>Różnica bramek</p>
-                <div style="width: 800px;">
+                <div>
                     <canvas id="goal_difference"></canvas>
                 </div>
                 <p>Zdobyte</p>
-                <div style="width: 800px;">
+                <div>
                     <canvas id="goals_for"></canvas>
                 </div>
                 <p>Stracone</p>
-                <div style="width: 800px;">
+                <div>
                     <canvas id="goals_against"></canvas>
                 </div>
 
             </div>
         </div>
     </div>
+</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-            crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
-    <script type="module" src="docs/assets/statistics.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
+<script type="module" src="docs/assets/statistics.js"></script>
 
 </body>

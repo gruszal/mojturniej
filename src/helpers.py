@@ -72,7 +72,7 @@ def create_all_time(results: pd.DataFrame):
     return results_sanitized.T.to_dict()
 
 
-def create_context(results: pd.DataFrame, tournaments: pd.DataFrame) -> dict:
+def create_index_context(results: pd.DataFrame, tournaments: pd.DataFrame) -> dict:
     return {
         'tournaments': create_tournaments(results, tournaments),
         'all_time': create_all_time(results)

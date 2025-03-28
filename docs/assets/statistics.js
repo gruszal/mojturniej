@@ -57,7 +57,8 @@ const options = {
             },
             beginAtZero: true,
         }
-    }
+    },
+    // maintainAspectRatio: false  // Allows independent height control
 }
 
 async function generate_graph(json_file_path, element_id, options) {

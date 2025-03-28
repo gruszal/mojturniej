@@ -1,7 +1,7 @@
 import pandas as pd
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
-from src.helpers import create_index_context, get_sanitized_results
+from src.helpers import create_index_context, get_sanitized_results, create_statistics_context
 from src.json_data_helpers import generate_jsons
 
 if __name__ == '__main__':
@@ -25,7 +25,7 @@ if __name__ == '__main__':
         f.write(content)
 
     template = env.get_template("src/templates/statistics.html")
-    context = create_index_context(results, tournaments)
+    context = create_statistics_context(results)
 
     with open("statistics.html", mode="w") as f:
         content = template.render(context)

@@ -67,7 +67,8 @@ def create_tournaments(results: pd.DataFrame, tournaments: pd.DataFrame) -> list
 def create_all_time(results: pd.DataFrame):
     results_grouped = results.groupby(["player", "place"]).size().reset_index(name="count")
     results_by_player = results_grouped.pivot(index="player", columns="place", values="count")
-    results_by_player_sorted = results_by_player.sort_values(by=[1, 2, 3, 4, 5], ascending=[False] * 5).astype('int64', errors='ignore')
+    results_by_player_sorted = results_by_player.sort_values(by=[1, 2, 3, 4, 5], ascending=[False] * 5).astype('int64',
+                                                                                                               errors='ignore')
     results_sanitized = results_by_player_sorted.fillna(0).astype(int)
     return results_sanitized.T.to_dict()
 
@@ -75,7 +76,20 @@ def create_all_time(results: pd.DataFrame):
 def create_index_context(results: pd.DataFrame, tournaments: pd.DataFrame) -> dict:
     return {
         'tournaments': create_tournaments(results, tournaments),
-        'all_time': create_all_time(results)
+    }
+
+
+def sum_matches_played(results: pd.DataFrame):
+    # TODO: calculate points_per_match
+    sum_df = results.groupby(["player"]).sum().filter(items=["player", "RM", "Z", "R", "P", "BZ", "BS", "GD", "Points"])
+    # TODO: coefficient is not normalized here
+    return sum_df.T.to_dict()
+
+
+def create_statistics_context(results: pd.DataFrame) -> dict:
+    return {
+        'all_time': create_all_time(results),
+        'sum_matches': sum_matches_played(results)
     }
 
 

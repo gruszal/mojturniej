@@ -58,10 +58,10 @@
         </div>
     </div>
 
-        <div class="card my-2">
+    <div class="card my-2">
         <div class="card-body">
             <p class="card-title">Tabela sumaryczna</p>
-            <table class="table">
+            <table id="summaryTable" class="table">
                 <thead>
                 <tr>
                     <th></th>
@@ -73,7 +73,7 @@
                     <th>Bramki stracone</th>
                     <th>Różnica bramek</th>
                     <th>Punkty</th>
-<!--                    <th>Punkty na mecz</th>-->
+                    <!--                    <th>Punkty na mecz</th>-->
                 </tr>
                 </thead>
                 <tbody>
@@ -88,7 +88,7 @@
                     <td>{{ results.BS }}</td>
                     <td>{{ results.GD }}</td>
                     <td>{{ results.Points }}</td>
-<!--                    <td>{{ results.points_per_match }}</td>-->
+                    <!--                    <td>{{ results.points_per_match }}</td>-->
                 </tr>
                 {% endfor %}
                 </tbody>
@@ -100,7 +100,7 @@
         <div class="card-body">
             <p class="card-title">miejsce zdobyte w turnieju</p>
             <div>
-                <canvas id="places_per_tournament" width="4" height="1"></canvas>
+                <canvas id="places_per_tournament"></canvas>
             </div>
         </div>
     </div>
@@ -109,7 +109,7 @@
         <div class="card-body">
             <p class="card-title">liczba punktów zdobytych w turnieju</p>
             <div>
-                <canvas id="points_per_tournament" width="4" height="1"></canvas>
+                <canvas id="points_per_tournament"></canvas>
             </div>
         </div>
     </div>
@@ -118,7 +118,7 @@
         <div class="card-body">
             <p class="card-title">średnia liczba punktów zdobytych na mecz</p>
             <div>
-                <canvas id="points_per_match_per_tournament" width="4" height="1"></canvas>
+                <canvas id="points_per_match_per_tournament"></canvas>
             </div>
         </div>
     </div>
@@ -132,15 +132,15 @@
                     współczynnik w danym turnieju.
                 </p>
                 <div>
-                    <canvas id="coefficient_per_tournament" width="4" height="1"></canvas>
+                    <canvas id="coefficient_per_tournament"></canvas>
                 </div>
                 <p class="card-title">kolejne sumy współczynników</p>
                 <div>
-                    <canvas id="all_tournament_rolling_coefficient" width="4" height="1"></canvas>
+                    <canvas id="all_tournament_rolling_coefficient"></canvas>
                 </div>
                 <p class="card-title">średnia współczynników z ostatnich pięciu turniejów</p>
                 <div>
-                    <canvas id="five_tournament_rolling_coefficient" width="4" height="1"></canvas>
+                    <canvas id="five_tournament_rolling_coefficient"></canvas>
                 </div>
             </div>
         </div>
@@ -152,15 +152,15 @@
                 <h5>Bramki</h5>
                 <p>Różnica bramek</p>
                 <div>
-                    <canvas id="goal_difference" width="4" height="1"></canvas>
+                    <canvas id="goal_difference"></canvas>
                 </div>
                 <p>Zdobyte</p>
                 <div>
-                    <canvas id="goals_for" width="4" height="1"></canvas>
+                    <canvas id="goals_for"></canvas>
                 </div>
                 <p>Stracone</p>
                 <div>
-                    <canvas id="goals_against" width="4" height="1"></canvas>
+                    <canvas id="goals_against"></canvas>
                 </div>
 
             </div>
@@ -173,6 +173,22 @@
         crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
 <script type="module" src="docs/assets/statistics.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#summaryTable').DataTable({
+            searching: false,
+            info: false,
+            ordering: true,
+            paging: false
+        });
+    });
+</script>
 
 </body>

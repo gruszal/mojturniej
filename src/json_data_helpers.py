@@ -56,10 +56,10 @@ class CoefficientPerTournament(JsonData):
         self.results['points_per_match'] = self.results['Points'] / self.results['RM']
         self.results['coef'] = self.results['points_per_match'] / self.results['Rank']
 
-        df = pd.pivot_table(self.results, index='player', columns='tournament', values='coef')
+        coeff_per_tournament = pd.pivot_table(self.results, index='player', columns='tournament', values='coef')
 
-        df_normalized = df.div(df.max())
-        return df_normalized
+        coeff_per_tournament_normalized = coeff_per_tournament.div(coeff_per_tournament.max())
+        return coeff_per_tournament_normalized
 
 
 class FiveTournamentRollingCoefficient(CoefficientPerTournament):
@@ -69,6 +69,21 @@ class FiveTournamentRollingCoefficient(CoefficientPerTournament):
         df_normalized = super().generate_data()
         rolling_df = df_normalized.T.rolling(window=5, min_periods=1).mean().T
         return rolling_df
+
+    def get_seeding(self, tiers=5):
+        rolling_df = self.generate_data()
+        last_rolling_coeff = rolling_df.iloc[:, -1].to_dict()
+
+        def get_tier(value, tiers=tiers):
+            step = 1 / tiers  # Size of each tier
+            tier = int(value // step)  # Determine tier index
+            return min(tier, tiers - 1)  # Ensure max tier index is not exceeded
+
+        player_to_tier = {k: get_tier(v) for k, v in last_rolling_coeff.items()}
+        tier_to_seeding_mapping = {v:str(5 - (i * 0.5)) for i, v in enumerate(range(min(player_to_tier.values()), tiers))}
+        player_to_seeding = {k:tier_to_seeding_mapping[v] for k, v in player_to_tier.items()}
+
+        return player_to_seeding
 
 
 class AllTournamentsRollingCoefficient(CoefficientPerTournament):

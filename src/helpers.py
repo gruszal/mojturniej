@@ -1,5 +1,7 @@
 import pandas as pd
 
+from src.json_data_helpers import FiveTournamentRollingCoefficient
+
 
 def fix_commas_in_rank(results: pd.DataFrame) -> pd.DataFrame:
     results['Rank'] = results['Rank'].str.replace(',', '.')
@@ -89,7 +91,9 @@ def sum_matches_played(results: pd.DataFrame):
 def create_statistics_context(results: pd.DataFrame) -> dict:
     return {
         'all_time': create_all_time(results),
-        'sum_matches': sum_matches_played(results)
+        'sum_matches': sum_matches_played(results),
+        'seeding': FiveTournamentRollingCoefficient(results).get_seeding(tiers=5)
+        # TODO: make number of tiers stored in one place
     }
 
 

@@ -214,21 +214,45 @@
     <div class="card my-2">
         <div class="card-body">
             <div class="card-title">
-                <h5>Współczynnik zdobyty w turnieju</h5>
-                <p>Wspólczynnik to punkty zdobyte w turnieju podzielone przez jakość zespołu i podzielone przez
-                    najwyższy
-                    współczynnik w danym turnieju.
+                <h4>Współczynnik zdobyty w turnieju</h4>
+            </div>
+            <div class="card-text">
+                <p>
+                    Wspólczynnik gracza w danym turnieju, to zdobyte punkty podzielone przez liczbę meczów, a następnie podzielone przez jakość ("gwiazdki") zespołu.
+                    Ta liczba jest na koniec "normalizowana", czyli każdy współczynnik dla danego turnieju jest dzielony przez największy współczynnik.
+                    Dzięki temu, niezależnie od liczby graczy i jakości wybranych zespołów, w turnieju można zdobyć współczynnik od 0 do 1.
                 </p>
+
+                <h5>średnia współczynników z ostatnich pięciu turniejów</h5>
+                <div>
+                    <canvas id="five_tournament_rolling_coefficient"></canvas>
+                </div>
+
+                <h5>Rozstawienie jakości zespołów w przyszłym turnieju</h5>
+                <div>
+                    <ul>
+                    
+                        <li>Alek - 4.0</li>
+                    
+                        <li>Bartek - 5.0</li>
+                    
+                        <li>Domin - 4.0</li>
+                    
+                        <li>Maciek - 4.5</li>
+                    
+                        <li>Wojtek - 3.5</li>
+                    
+                    </ul>
+                </div>
+
+                <h5>współczynniki zdobyte w poszczególnych turniejach</h5>
                 <div>
                     <canvas id="coefficient_per_tournament"></canvas>
                 </div>
-                <p class="card-title">kolejne sumy współczynników</p>
+
+                <h5>kolejne sumy współczynników</h5>
                 <div>
                     <canvas id="all_tournament_rolling_coefficient"></canvas>
-                </div>
-                <p class="card-title">średnia współczynników z ostatnich pięciu turniejów</p>
-                <div>
-                    <canvas id="five_tournament_rolling_coefficient"></canvas>
                 </div>
             </div>
         </div>

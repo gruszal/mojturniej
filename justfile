@@ -3,5 +3,8 @@
 run-server:
     python -m http.server 8000
 
+open-page:
+    open http://localhost:8000
+
 generate-new-pages:
     python main.py

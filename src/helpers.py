@@ -41,6 +41,9 @@ def create_tournaments(results: pd.DataFrame, tournaments: pd.DataFrame) -> list
     for index, tournament in tournaments.iterrows():
         id_ = tournament['turniej']
         date = tournament['data']
+        host = tournament['host']
+        tournament = tournament.replace({float('nan'): None})
+        notes = tournament['notes']
         data = results[results['tournament'] == id_]
 
         data.insert(0, 'place', data.pop('place'))
@@ -51,6 +54,8 @@ def create_tournaments(results: pd.DataFrame, tournaments: pd.DataFrame) -> list
             'id': id_,
             'name': f"Mój Turniej {id_}",
             'date': date,
+            'host': host,
+            'notes': notes,
             'data': data.to_dict('records'),
         }
         context_tournaments.append(single_tournament)

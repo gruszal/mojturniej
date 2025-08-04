@@ -74,6 +74,15 @@
                     {% endfor %}
                     </tbody>
                 </table>
+                <div class="card">
+                    <div class="card-body">
+
+                        <span class="me-4">gospodarz: {{tournament.host}}</span>
+                        {% if tournament.notes %}
+                        Uwagi: {{tournament.notes}}
+                        {% endif %}
+                    </div>
+                </div>
             </div>
         </div>
     </div>

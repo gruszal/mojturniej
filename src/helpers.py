@@ -3,12 +3,6 @@ import pandas as pd
 from src.json_data_helpers import FiveTournamentRollingCoefficient
 
 
-def fix_commas_in_rank(results: pd.DataFrame) -> pd.DataFrame:
-    results['Rank'] = results['Rank'].str.replace(',', '.')
-    results['Rank'] = results['Rank'].astype(float)
-    return results
-
-
 def convert_column_to_int(results: pd.DataFrame, column_name: str) -> pd.DataFrame:
     results[column_name] = pd.to_numeric(results[column_name], errors='coerce').astype('Int64')
     return results
@@ -98,7 +92,6 @@ def create_statistics_context(results: pd.DataFrame) -> dict:
 
 
 def get_sanitized_results(results: pd.DataFrame) -> pd.DataFrame:
-    results = fix_commas_in_rank(results)
     results = convert_column_to_int(results, "BZ")
     results = convert_column_to_int(results, "BS")
     results = add_goal_difference_column(results)

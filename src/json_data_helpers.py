@@ -80,10 +80,14 @@ class FiveTournamentRollingCoefficient(CoefficientPerTournament):
             return min(tier, tiers - 1)  # Ensure max tier index is not exceeded
 
         player_to_tier = {k: get_tier(v) for k, v in last_rolling_coeff.items()}
-        tier_to_seeding_mapping = {v:str(5 - (i * 0.5)) for i, v in enumerate(range(min(player_to_tier.values()), tiers))}
-        player_to_seeding = {k:tier_to_seeding_mapping[v] for k, v in player_to_tier.items()}
+        tier_to_seeding_mapping = {v: str(5 - (i * 0.5)) for i, v in
+                                   enumerate(range(min(player_to_tier.values()), tiers))}
+        player_to_seeding = {k: tier_to_seeding_mapping[v] for k, v in player_to_tier.items()}
 
-        return player_to_seeding
+        # sort
+        result = dict(sorted(player_to_seeding.items(), key=lambda x: x[1]))
+
+        return result
 
 
 class AllTournamentsRollingCoefficient(CoefficientPerTournament):

@@ -44,8 +44,8 @@ def ver2(last_five_tournaments):
 
 
 if __name__ == '__main__':
-    results = pd.read_csv('docs/assets/wyniki2.csv')
-    tournaments = pd.read_csv('docs/assets/turnieje.csv')
+    results = pd.read_csv('results/wyniki2.csv')
+    tournaments = pd.read_csv('results/turnieje.csv')
 
     results = get_sanitized_results(results)
 

@@ -91,7 +91,7 @@ def create_statistics_context(results: pd.DataFrame) -> dict:
     return {
         'all_time': create_all_time(results),
         'sum_matches': sum_matches_played(results),
-        'seeding': FiveTournamentRollingCoefficient(results).get_seeding(tiers=5)
+        'seeding': FiveTournamentRollingCoefficient(results).get_seeding(tiers=4)
         # TODO: make number of tiers stored in one place
     }
 

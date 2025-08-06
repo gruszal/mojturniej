@@ -77,14 +77,14 @@ async function generate_graph(json_file_path, element_id, options) {
         });
 }
 
-function generate_boxes(n) {
+function generate_boxes(number_of_tiers) {
     var annotations = {}
 
-    for (let i = 0; i < n; i += 2) {
+    for (let i = 0; i < number_of_tiers; i += 2) {
         annotations['box' + i] = {
             type: 'box',
-            yMin: i / n,
-            yMax: (i + 1) / n,
+            yMin: i / number_of_tiers,
+            yMax: (i + 1) / number_of_tiers,
             backgroundColor: 'rgba(0,0,0,0.1)',
             borderWidth: 0
         }
@@ -105,7 +105,7 @@ generate_graph('docs/assets/coefficient_per_tournament.json', 'coefficient_per_t
 
 var options2 = structuredClone(options);
 options2.plugins.annotation = {
-    annotations: generate_boxes(5)
+    annotations: generate_boxes(4)
 };
 
 generate_graph('docs/assets/five_tournament_rolling_coefficient.json', 'five_tournament_rolling_coefficient', options2);

@@ -24,7 +24,7 @@ if __name__ == '__main__':
     excel_file = Path(__file__).parent / "results" / "Match schedule - Mój Turniej 15.xlsx"
     df_matches = read_tournament_from_tournify_export(excel_file)
     table = convert_to_football_table(df_matches, 15)
-    table = update_team_and_rank(table, 'Maciek', "Valencia", 4.5)
+    table = update_team_and_rank(table, 'Maciek', "Villareal", 4.5)
     table = update_team_and_rank(table, 'Wojtek', "Al-ahli", 3.5)
     table = update_team_and_rank(table, 'Alek', "Dinamo Zagreb", 3.5)
     table = update_team_and_rank(table, 'Domin', "M'gladbach", 4)

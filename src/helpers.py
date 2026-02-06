@@ -82,7 +82,7 @@ def create_index_context(results: pd.DataFrame, tournaments: pd.DataFrame) -> di
 
 def sum_matches_played(results: pd.DataFrame):
     # TODO: calculate points_per_match
-    sum_df = results.groupby(["player"]).sum().filter(items=["player", "RM", "Z", "R", "P", "BZ", "BS", "GD", "Points"])
+    sum_df = results.filter(items=["player", "RM", "Z", "R", "P", "BZ", "BS", "GD", "Points"]).groupby(["player"]).sum()
     # TODO: coefficient is not normalized here
     return sum_df.T.to_dict()
 
@@ -103,3 +103,9 @@ def get_sanitized_results(results: pd.DataFrame) -> pd.DataFrame:
     results = add_points_column(results)
     results = add_tournament_place(results)
     return results
+
+
+def update_team_and_rank(table, player: str, team: str, rank: float):
+    table.loc[table['player'] == player, 'team'] = team
+    table.loc[table['player'] == player, 'Rank'] = rank
+    return table

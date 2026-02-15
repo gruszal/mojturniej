@@ -10,53 +10,10 @@ from src.json_data_helpers import generate_jsons
 if __name__ == '__main__':
     results_dir = Path(__file__).parent / "results"
 
-    results = pd.read_csv(results_dir / 'wyniki2.csv')
+    results = pd.read_csv(results_dir / 'wyniki.csv')
     tournaments = pd.read_csv(results_dir / 'turnieje.csv')
 
     results = get_sanitized_results(results)
-
-    # TODO: write to csv insead of read on the fly
-    file = results_dir / "Match schedule - Mój Turniej 15.xlsx"
-    ti = TournifyImporter(KeysEN(), file, tournament_name="15")
-    results, tournaments = ti.add_tournament_from_tournify(
-        results,
-        tournaments,
-        teams=[
-            ('Maciek', "Villareal", 4.5),
-            ('Wojtek', "Al-ahli", 3.5),
-            ('Alek', "Dinamo Zagreb", 3.5),
-            ('Domin', "M'gladbach", 4),
-            ('Bartek', "PSG", 5),
-        ]
-    )
-
-    file = results_dir / "Match schedule - Mój Turniej 16.xlsx"
-    ti = TournifyImporter(KeysEN(), file, tournament_name="16")
-    results, tournaments = ti.add_tournament_from_tournify(
-        results,
-        tournaments,
-        teams=[
-            ('Maciek', "Chorwacja", 4.5),
-            ('Wojtek', "Węgry", 3.5),
-            ('Alek', "Irlandia", 3.5),
-            ('Domin', "Ghana", 4),
-            ('Bartek', "Argentyna", 5),
-        ]
-    )
-
-    file = results_dir / "Harmonogram meczowy - Mój Turniej 17.xlsx"
-    ti = TournifyImporter(KeysPL(), file, tournament_name="17")
-    results, tournaments = ti.add_tournament_from_tournify(
-        results,
-        tournaments,
-        teams=[
-            ('Maciek', "Chelsea", 4.5),
-            ('Wojtek', "Ajax", 4),
-            ('Alek', "Torino", 4),
-            ('Domin', "Borussia Dortmund", 4.5),
-            ('Bartek', "Barcelona", 5),
-        ]
-    )
 
     results.reset_index(drop=True, inplace=True)
     generate_jsons(results)

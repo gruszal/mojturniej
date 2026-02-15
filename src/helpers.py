@@ -44,7 +44,7 @@ def create_tournaments(results: pd.DataFrame, tournaments: pd.DataFrame) -> list
         host = tournament['host']
         tournament = tournament.replace({float('nan'): None})
         notes = tournament['notes']
-        data = results[results['tournament'] == id_]
+        data = results[results['tournament'] == int(id_)]
 
         data.insert(0, 'place', data.pop('place'))
 

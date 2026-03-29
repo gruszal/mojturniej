@@ -78,6 +78,11 @@
                     <div class="card-body">
 
                         <span class="me-4"><b>Gospodarz</b>: {{tournament.host}}</span>
+                        {% if tournament.game %}
+                        <span class="me-4">
+                        <b>Gra</b>: {{tournament.game}}
+                        </span>
+                        {% endif %}
                         {% if tournament.notes %}
                         <b>Uwagi</b>: {{tournament.notes}}
                         {% endif %}

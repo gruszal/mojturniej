@@ -1,18 +1,19 @@
-turniej,data,host,notes
-1,04.02.2023,Alek,
-2,17.03.2023,Alek,
-3,21.04.2023,Domin,
-4,06.06.2023,Bartek,
-5,07.07.2023,Maciek,
-6,21.08.2023,Bartek,
-7,14.11.2023,Alek,
-8,31.01.2024,Maciek,
-9,04.06.2024,Domin,
-10,13.08.2024,Maciek,
-11,31.10.2024,Wojtek,
-12,05.01.2025,Domin,
-13,27.03.2025,Domin,
-14,10.06.2025,Alek,
-15,05.08.2025,Domin,"Turniej z pełną rundą podstawową i połową rundy rewanżową."
-16,19.11.2025,Bartek,"Turniej z pełną rundą podstawową i połową rundy rewanżową."
-17,05.02.2026,Alek,"Turniej z pełną rundą podstawową i połową rundy rewanżową. Pierwszy turniej rozgrywany w EAFC 26"
+turniej,data,host,notes,game
+1,04.02.2023,Alek,,
+2,17.03.2023,Alek,,
+3,21.04.2023,Domin,,
+4,06.06.2023,Bartek,,
+5,07.07.2023,Maciek,,
+6,21.08.2023,Bartek,,
+7,14.11.2023,Alek,,
+8,31.01.2024,Maciek,,
+9,04.06.2024,Domin,,
+10,13.08.2024,Maciek,,
+11,31.10.2024,Wojtek,,
+12,05.01.2025,Domin,,
+13,27.03.2025,Domin,,
+14,10.06.2025,Alek,,
+15,05.08.2025,Domin,"Turniej z pełną rundą podstawową i połową rundy rewanżową.",EAFC25"
+16,19.11.2025,Bartek,"Turniej z pełną rundą podstawową i połową rundy rewanżową.","EAFC25"
+17,05.02.2026,Alek,"Turniej z pełną rundą podstawową i połową rundy rewanżową.","EAFC26"
+18,28.03.2026,Domin,"Turniej o 16:00. Pierwsze trzy mecze w PES2008, później turniej z pełną rundą podstawową i połową rundy rewanżową.","EAFC26"

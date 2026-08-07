@@ -3,7 +3,6 @@ from pathlib import Path
 import pandas as pd
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
-from import_from_tournify.import_from_tournify import TournifyImporter, KeysEN, KeysPL
 from src.helpers import create_index_context, get_sanitized_results, create_statistics_context
 from src.json_data_helpers import generate_jsons
 
